@@ -113,7 +113,7 @@ def logout():
 @app.route('/panel')
 @login_required
 def panel():
-    return render_template('panel.html')
+    return render_template('index.html')
 
 # ============= INVENTARIO =============
 @app.route('/inventario')
@@ -520,4 +520,5 @@ def api_usuarios():
     return jsonify({'success': False, 'message': 'Acción inválida'})
 
 if __name__ == '__main__':
+
     app.run(debug=True)
