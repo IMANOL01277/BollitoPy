@@ -17,11 +17,10 @@ app.secret_key = 'tu_clave_secreta_aqui_cambiar'
 def get_conn():
     return psycopg2.connect(
         host=os.getenv("SUPABASE_HOST"),
-        port=os.getenv("SUPABASE_PORT", 6543),
+        port=os.getenv("SUPABASE_PORT"),
         database=os.getenv("SUPABASE_DB"),
         user=os.getenv("SUPABASE_USER"),
         password=os.getenv("SUPABASE_PASSWORD"),
-        sslmode="require",
         connect_timeout=5
     )
 
@@ -529,5 +528,6 @@ def api_usuarios():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
 
 
