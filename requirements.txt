@@ -1,6 +1,4 @@
 Flask
-flask-mysqldb
-psycopg2-binary
 gunicorn
-
-python-dotenv
+psycopg2-binary
+Werkzeug
