@@ -65,7 +65,7 @@ def login():
         cur.close()
         conn.close()
 
-        if usuario and check_password_hash(usuario[3], contrasena):
+        if usuario and check_password_hash(usuario[4], contrasena):
             session['id_usuario'] = usuario[0]
             session['nombre'] = usuario[1]
             session['correo'] = usuario[2]
@@ -528,6 +528,7 @@ def api_usuarios():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
 
 
 
