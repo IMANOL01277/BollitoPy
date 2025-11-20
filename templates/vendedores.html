@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block title %}Vendedores - Mi Bollito{% endblock %}
+
+{% block extra_css %}
+<style>
+.card-panel {
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0px 3px 10px rgba(0,0,0,0.1);
+}
+
+.btn-admin {
+    background: #7a3e1c;
+    color: white;
+}
+
+.btn-admin:hover {
+    background: #5e2f15;
+    color: white;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="card-panel">
+    <h3 class="mb-4">Gestión de Vendedores Ambulantes</h3>
+    
+    <!-- Formulario para agregar -->
+    <h5 class="mb-3">➕ Registrar nuevo vendedor</h5>
+    
+    <form method="POST" class="row g-3 mb-4">
+        <div class="col-md-4">
+            <label class="form-label">Nombre</label>
+            <input type="text" name="nombre" class="form-control" placeholder="Nombre completo" required>
+        </div>
+        
+        <div class="col-md-4">
+            <label class="form-label">Teléfono</label>
+            <input type="text" name="telefono" class="form-control" placeholder="300 123 4567" required>
+        </div>
+        
+        <div class="col-md-4">
+            <label class="form-label">Dirección</label>
+            <input type="text" name="direccion" class="form-control" placeholder="Dirección del vendedor" required>
+        </div>
+        
+        <div class="col-12 text-end">
+            <button class="btn btn-admin" name="add_vendedor">Guardar vendedor</button>
+        </div>
+    </form>
+    
+    <hr>
+    
+    <!-- Tabla -->
+    <h5 class="mb-3">📋 Lista de vendedores registrados</h5>
+    
+    <div class="table-responsive">
+        <table class="table table-bordered align-middle">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Nombre</th>
+                    <th>Teléfono</th>
+                    <th>Dirección</th>
+                    <th>Fecha registro</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if not vendedores %}
+                <tr>
+                    <td colspan="6" class="text-center text-muted">No hay vendedores registrados</td>
+                </tr>
+                {% else %}
+                {% for v in vendedores %}
+                <tr>
+                    <td>{{ v[0] }}</td>
+                    <td>{{ v[3] }}</td>
+                    <td>{{ v[4] or '-' }}</td>
+                    <td>{{ v[5] or '-' }}</td>
+                    <td>{{ v[6] }}</td>
+                    <td>
+                        <a href="{{ url_for('vendedores', eliminar=v[0]) }}" 
+                           class="btn btn-sm btn-danger"
+                           onclick="return confirm('¿Eliminar vendedor?')">
+                           Eliminar
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

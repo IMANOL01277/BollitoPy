@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Mi Bollito{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f4e8d1;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            display: flex;
+        }
+        .sidebar {
+            width: 240px;
+            background-color: #a0522d;
+            height: 100vh;
+            color: #fff;
+            position: fixed;
+            top: 0;
+            left: 0;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+        .sidebar h4 {
+            font-weight: bold;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        .sidebar a {
+            color: #fff;
+            text-decoration: none;
+            display: block;
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin-bottom: 5px;
+            transition: background 0.2s;
+        }
+        .sidebar a:hover,
+        .sidebar a.active {
+            background-color: #8b4513;
+        }
+        .content {
+            margin-left: 260px;
+            padding: 20px;
+            flex: 1;
+            min-height: 100vh;
+        }
+        .badge {
+            color: #fff !important;
+            font-size: 0.9rem;
+            padding: 6px 10px;
+            border-radius: 8px;
+        }
+        .bg-success {
+            background-color: #28a745 !important;
+        }
+        .bg-warning {
+            background-color: #ffc107 !important;
+            color: #000 !important;
+        }
+        .bg-danger {
+            background-color: #dc3545 !important;
+        }
+        .bg-secondary {
+            background-color: #6c757d !important;
+        }
+        .bg-light {
+            background-color: #e9ecef !important;
+            color: #000 !important;
+        }
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+        .table thead {
+            background-color: #7a3e1c;
+            color: white;
+        }
+    </style>
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    {% if session.nombre %}
+    <div class="sidebar">
+        <h4>Mi Bollito</h4>
+        
+        <a href="{{ url_for('panel') }}"><i class="bi bi-house-door"></i> Inicio</a>
+        <a href="{{ url_for('inventario') }}"><i class="bi bi-box-seam"></i> Inventario</a>
+        <a href="{{ url_for('estadisticas') }}"><i class="bi bi-graph-up"></i> Estadísticas</a>
+        <a href="{{ url_for('domicilios') }}"><i class="bi bi-bicycle"></i> Domicilios</a>
+        
+        {% if session.rol == 'administrador' %}
+        <a href="{{ url_for('usuarios') }}"><i class="bi bi-person"></i> Usuarios</a>
+        <a href="{{ url_for('categorias') }}"><i class="bi bi-bookmark"></i> Categorías</a>
+        <a href="{{ url_for('proveedores') }}"><i class="bi bi-people"></i> Proveedores</a>
+        <a href="{{ url_for('vendedores') }}"><i class="bi bi-truck"></i> Vendedores</a>
+        {% endif %}
+        
+        <div class="mt-auto">
+            <hr class="text-light">
+            <p class="small mb-1">👤 {{ session.nombre }}</p>
+            <p class="small text-light">{{ session.rol }}</p>
+            <a href="{{ url_for('logout') }}" class="btn btn-light btn-sm w-100 mt-2">
+                <i class="bi bi-box-arrow-right"></i> Cerrar sesión
+            </a>
+        </div>
+    </div>
+    {% endif %}
+    
+    <div class="content">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        
+        {% block content %}{% endblock %}
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

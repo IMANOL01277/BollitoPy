@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block title %}Domicilios - Mi Bollito{% endblock %}
+
+{% block content %}
+<div class="card shadow-sm border-0 rounded-4">
+    <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h4 class="mb-0 fw-bold">🛵 Gestión de Domicilios</h4>
+            <button class="btn btn-success rounded-pill px-3" data-bs-toggle="modal" data-bs-target="#modalCreate">
+                + Nuevo Domicilio
+            </button>
+        </div>
+        
+        <div class="table-responsive">
+            <table class="table table-striped align-middle text-center">
+                <thead class="table-light">
+                    <tr>
+                        <th>#</th>
+                        <th>Conductor</th>
+                        <th>Matrícula</th>
+                        <th>Producto</th>
+                        <th>Observaciones</th>
+                        <th>Fecha</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if not domicilios %}
+                    <tr>
+                        <td colspan="7" class="text-center text-muted py-3">No hay domicilios registrados.</td>
+                    </tr>
+                    {% else %}
+                    {% for dom in domicilios %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ dom[1] }}</td>
+                        <td>{{ dom[2] }}</td>
+                        <td>{{ dom[4] }}</td>
+                        <td>{{ dom[3] or '-' }}</td>
+                        <td>{{ dom[5] }}</td>
+                        <td>
+                            <form method="POST" onsubmit="return confirm('¿Eliminar domicilio?');" style="display:inline-block;">
+                                <input type="hidden" name="action" value="delete">
+                                <input type="hidden" name="id_domicilio" value="{{ dom[0] }}">
+                                <button type="submit" class="btn btn-outline-danger btn-sm">Eliminar</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Crear -->
+<div class="modal fade" id="modalCreate" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <form method="POST" class="modal-content">
+            <input type="hidden" name="action" value="create">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title">Registrar nuevo domicilio</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label class="form-label">Conductor responsable</label>
+                    <input type="text" name="conductor_responsable" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Matrícula del vehículo</label>
+                    <input type="text" name="matricula_vehiculo" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Producto</label>
+                    <select name="id_producto" class="form-select" required>
+                        <option value="">Seleccione un producto</option>
+                        {% for p in productos %}
+                        <option value="{{ p[0] }}">{{ p[1] }} (Stock: {{ p[2] }})</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Cantidad</label>
+                    <input type="number" name="cantidad" class="form-control" min="1" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Observaciones</label>
+                    <textarea name="observaciones" class="form-control" rows="3"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-success">Guardar</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

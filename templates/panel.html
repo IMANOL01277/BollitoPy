@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Panel - Mi Bollito{% endblock %}
+
+{% block content %}
+<h3 class="mb-4"><i class="bi bi-speedometer"></i> Bienvenido al Panel</h3>
+<div class="row g-3">
+    <div class="col-md-4">
+        <div class="card p-3 shadow-sm text-center">
+            <i class="bi bi-box-seam fs-1 text-warning"></i>
+            <h5 class="mt-2">Inventario</h5>
+            <a href="{{ url_for('inventario') }}" class="btn btn-outline-warning btn-sm mt-2">Entrar</a>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card p-3 shadow-sm text-center">
+            <i class="bi bi-graph-up fs-1 text-success"></i>
+            <h5 class="mt-2">Estadísticas</h5>
+            <a href="{{ url_for('estadisticas') }}" class="btn btn-outline-success btn-sm mt-2">Ver</a>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card p-3 shadow-sm text-center">
+            <i class="bi bi-bicycle fs-1 text-info"></i>
+            <h5 class="mt-2">Domicilios</h5>
+            <a href="{{ url_for('domicilios') }}" class="btn btn-outline-info btn-sm mt-2">Entrar</a>
+        </div>
+    </div>
+    
+    {% if session.rol == 'administrador' %}
+    <div class="col-md-4">
+        <div class="card p-3 shadow-sm text-center">
+            <i class="bi bi-person fs-1 text-primary"></i>
+            <h5 class="mt-2">Usuarios</h5>
+            <a href="{{ url_for('usuarios') }}" class="btn btn-outline-primary btn-sm mt-2">Administrar</a>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card p-3 shadow-sm text-center">
+            <i class="bi bi-bookmark fs-1 text-primary"></i>
+            <h5 class="mt-2">Categorías</h5>
+            <a href="{{ url_for('categorias') }}" class="btn btn-outline-primary btn-sm mt-2">Administrar</a>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card p-3 shadow-sm text-center">
+            <i class="bi bi-people fs-1 text-primary"></i>
+            <h5 class="mt-2">Proveedores</h5>
+            <a href="{{ url_for('proveedores') }}" class="btn btn-outline-primary btn-sm mt-2">Administrar</a>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card p-3 shadow-sm text-center">
+            <i class="bi bi-truck fs-1 text-primary"></i>
+            <h5 class="mt-2">Vendedores</h5>
+            <a href="{{ url_for('vendedores') }}" class="btn btn-outline-primary btn-sm mt-2">Administrar</a>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

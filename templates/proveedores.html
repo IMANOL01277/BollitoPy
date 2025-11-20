@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block title %}Proveedores - Mi Bollito{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h3 class="fw-bold">Gestión de Proveedores</h3>
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalProveedor">
+        + Nuevo Proveedor
+    </button>
+</div>
+
+<div class="card shadow-sm border-0">
+    <div class="card-body">
+        <table class="table table-hover align-middle">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Proveedor</th>
+                    <th>Contacto</th>
+                    <th>Teléfono</th>
+                    <th>Correo</th>
+                    <th>Dirección</th>
+                    <th>Fecha</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if not proveedores %}
+                <tr>
+                    <td colspan="7" class="text-center text-muted">No hay proveedores registrados</td>
+                </tr>
+                {% else %}
+                {% for prov in proveedores %}
+                <tr>
+                    <td>{{ prov[0] }}</td>
+                    <td>{{ prov[1] }}</td>
+                    <td>{{ prov[2] or '-' }}</td>
+                    <td>{{ prov[3] or '-' }}</td>
+                    <td>{{ prov[4] or '-' }}</td>
+                    <td>{{ prov[5] or '-' }}</td>
+                    <td>{{ prov[6] }}</td>
+                </tr>
+                {% endfor %}
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modal Nuevo Proveedor -->
+<div class="modal fade" id="modalProveedor">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-dark text-white">
+                <h5 class="modal-title">Registrar Proveedor</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            
+            <form method="POST">
+                <div class="modal-body">
+                    <label class="form-label fw-bold">Nombre:</label>
+                    <input type="text" class="form-control" name="nombre" required>
+                    
+                    <label class="form-label fw-bold mt-3">Persona de contacto:</label>
+                    <input type="text" class="form-control" name="contacto">
+                    
+                    <label class="form-label fw-bold mt-3">Teléfono:</label>
+                    <input type="text" class="form-control" name="telefono">
+                    
+                    <label class="form-label fw-bold mt-3">Correo:</label>
+                    <input type="email" class="form-control" name="correo">
+                    
+                    <label class="form-label fw-bold mt-3">Dirección:</label>
+                    <input type="text" class="form-control" name="direccion">
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
