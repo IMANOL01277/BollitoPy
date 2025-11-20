@@ -20,7 +20,9 @@ def get_conn():
         port=os.getenv("SUPABASE_PORT", 5432),
         database=os.getenv("SUPABASE_DB"),
         user=os.getenv("SUPABASE_USER"),
-        password=os.getenv("SUPABASE_PASSWORD")
+        password=os.getenv("SUPABASE_PASSWORD"),
+        sslmode="require",
+        connect_timeout=5
     )
 
 
@@ -527,3 +529,4 @@ def api_usuarios():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
