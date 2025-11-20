@@ -69,7 +69,7 @@ def login():
             session['id_usuario'] = usuario[0]
             session['nombre'] = usuario[1]
             session['correo'] = usuario[2]
-            session['rol'] = usuario[4]
+            session['rol'] = usuario[5]
             return redirect(url_for('panel'))
         else:
             flash('❌ Credenciales incorrectas', 'danger')
@@ -528,6 +528,7 @@ def api_usuarios():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
 
 
 
