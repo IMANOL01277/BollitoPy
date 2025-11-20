@@ -494,7 +494,7 @@ def api_usuarios():
     if action == 'create':
         nombre = request.form['nombre']
         correo = request.form['correo']
-        contrasena = generate_password_hash(request.form['contraseña'])
+        contrasena = generate_password_hash(request.form['contrasena'])
         rol = request.form['rol']
 
         cur.execute(
@@ -528,6 +528,7 @@ def api_usuarios():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
 
 
 
